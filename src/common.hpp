@@ -2,19 +2,22 @@
 #define COMMON_HPP
 
 #include <string>
-#include <unordered_set>
+#include <unordered_map>
 #include <userspace/registry.hpp>
-#include <cstdio>
 
 struct Node {
-	std::string name;
-	std::unordered_set<Node*> children;
+	std::unordered_map<std::string, Node*> children;
 };
 
-extern Node root;
+typedef std::vector<std::string> Parts;
+Parts getParts(const std::string& path);
+bool loExists(const Parts&);
+bool loCreate(const Parts& parts, bool recursive=false);
+
+#define UID_SYSTEM 1
+size_t exists(const std::string&);
+size_t create(std::PID, const std::string&);
 
 void publish();
-
-size_t find(const std::string& path, Node*& node);
 
 #endif
