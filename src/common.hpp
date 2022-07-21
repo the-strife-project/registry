@@ -3,6 +3,7 @@
 
 #include <string>
 #include <unordered_map>
+#include <unordered_set>
 #include <userspace/registry.hpp>
 
 struct Node {
@@ -12,6 +13,7 @@ struct Node {
 typedef std::vector<std::string> Parts;
 Parts getParts(const std::string& path);
 bool loExists(const Parts&);
+std::unordered_set<std::string> list(const Parts& parts);
 bool loCreate(const Parts& parts, bool recursive=false);
 
 #define UID_SYSTEM 1

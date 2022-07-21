@@ -24,6 +24,21 @@ bool loExists(const Parts& parts) {
 	return cur;
 }
 
+std::unordered_set<std::string> list(const Parts& parts) {
+	Node* cur = &root;
+	for(auto const& part : parts) {
+		auto it = cur->children.find(part);
+		if(it == cur->children.end())
+			return {};
+		cur = (*it).s;
+	}
+
+	std::unordered_set<std::string> ret;
+	for(auto const& x : cur->children)
+		ret.add(x.f);
+	return ret;
+}
+
 bool loCreate(const Parts& parts, bool recursive) {
 	if(!parts.size())
 		return false;
@@ -33,7 +48,7 @@ bool loCreate(const Parts& parts, bool recursive) {
 		auto const& part = parts[i];
 
 		auto it = cur->children.find(part);
-		bool found = it == cur->children.end();
+		bool found = it != cur->children.end();
 		if(!found && !recursive)
 			return false;
 		else if(!found)
